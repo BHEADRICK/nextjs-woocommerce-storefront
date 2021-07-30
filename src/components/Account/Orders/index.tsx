@@ -4,11 +4,13 @@ import { Order } from '../../../types'
 
 const AccountOrders: React.FC = () => {
   const { data } = useSWR('/api/orders/retrieve')
+console.log(data);
+if(data && data.length){
 
   return (
     <div>
       <ul>
-        {data?.map((item: Order) => {
+        {data?(data.map((item: Order) => {
           return (
             <li key={item.id}>
               <span>
@@ -16,10 +18,17 @@ const AccountOrders: React.FC = () => {
               </span>
             </li>
           )
-        })}
+        })):[]}
       </ul>
     </div>
   )
+}else{
+return(
+  <div>
+    No Orders Found
+  </div>
+)
+}
 }
 
 export default AccountOrders

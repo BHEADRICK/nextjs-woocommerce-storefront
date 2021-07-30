@@ -21,8 +21,8 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const createUserCart = async () => {
     setIsUpdating(true)
     const req = await fetch('/api/customers/retrieve')
-    const res = await req.json()
-    const cartKey = res.meta_data.find((x: { [key: string]: string }) => x.key === 'cart')
+    const res = await req.json();
+    const cartKey = res.meta_data?res.meta_data.find((x: { [key: string]: string }) => x.key === 'cart'):''
     let newCart: Cart
     if (cartKey) {
       newCart = await getCart(cartKey.value)
