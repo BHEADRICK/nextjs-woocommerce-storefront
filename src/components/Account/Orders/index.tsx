@@ -10,7 +10,7 @@ if(data && data.length){
   return (
     <div>
       <ul>
-        {data?(data.map((item: Order) => {
+        {data.map((item: Order) => {
           return (
             <li key={item.id}>
               <span>
@@ -18,7 +18,7 @@ if(data && data.length){
               </span>
             </li>
           )
-        })):[]}
+        })}
       </ul>
     </div>
   )
