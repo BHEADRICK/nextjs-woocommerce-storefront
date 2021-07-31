@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Cart } from '../types'
-import { getCart, initCart } from '../utils/functions'
+import { getCart, initCart, updateCart } from '../utils/functions'
 import { useSession } from 'next-auth/client'
 
 export const CartContext = React.createContext<any | null>(null)
@@ -17,15 +17,15 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   //however you still need to expire your local cart so the carts don't get out of sync
 
   const expireIn = 259200000 //3 days example
-
   const createUserCart = async () => {
     setIsUpdating(true)
     const req = await fetch('/api/customers/retrieve')
     const res = await req.json();
     const cartKey = res.meta_data?res.meta_data.find((x: { [key: string]: string }) => x.key === 'cart'):''
     let newCart: Cart
+
     if (cartKey) {
-      newCart = await getCart(cartKey.value)
+      newCart = await getCart(cartKey)
     } else {
       newCart = await initCart()
     }
@@ -55,13 +55,20 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   }
 
   useEffect(() => {
+  
     if (isUpdating) return
     if (session) {
       createUserCart()
     } else {
       const localCart = checkForLocalCart(expireIn)
       if (localCart) {
+        
         setCart(localCart)
+        if (localCart.key) {
+          const data = getCart(localCart.key)
+          updateCart(localCart, data)
+        } 
+      
       } else {
         createGuestCart()
       }

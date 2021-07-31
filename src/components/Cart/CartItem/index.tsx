@@ -40,7 +40,7 @@ const SingleCartItem: React.FC<CartItemProps> = ({ item, price }) => {
 
       setIsUpdating(false)
       setIsRemoving(false)
-      setCart(() => updateCart(cart, data))
+      setCart(() => updateCart(cart, data.items))
     } catch (error) {
       const newCart = await initCart()
       setCart(newCart)

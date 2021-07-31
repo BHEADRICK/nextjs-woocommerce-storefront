@@ -75,6 +75,7 @@ export const initCart = async () => {
 }
 
 export const getCart = async (cartKey: string) => {
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_WP_API_URL}/wp-json/cocart/v1/get-cart?cart_key=${cartKey}`,
   )
@@ -97,7 +98,10 @@ export const getSingleProduct = (productId: number, data: any) => {
 
 export const updateCart = (cart: Cart, data: Response) => {
   const newCart = { ...cart }
-  newCart.items = Object.values(data)
+  if (data) {
+    newCart.items = data.items
+  }
+  
 
   return newCart
 }
