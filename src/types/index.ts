@@ -33,6 +33,7 @@ export interface CartItem {
   quantity: number
   product_price?: string
   product_name?: string
+  price?: string
   image?: string
   slug?: string
   line_total?: number

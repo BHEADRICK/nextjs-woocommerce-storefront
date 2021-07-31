@@ -1,1 +1,1 @@
-module.exports = { siteUrl: 'https://www.pajustudio.net', generateRobotsTxt: true }
+module.exports = { siteUrl: 'https://app.bryanheadrick.com', generateRobotsTxt: true }
