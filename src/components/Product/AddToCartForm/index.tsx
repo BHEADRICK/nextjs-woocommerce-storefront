@@ -40,7 +40,7 @@ const AddToCartForm: React.FC<UpdateCartButtonProps> = ({ product }) => {
       if (res.status !== 200) throw Error('Problem with remote cart')
       const data = await res.json()
 
-      setCart(() => updateCart(cart, data))
+      setCart(() => updateCart(cart, data.items))
       setIsUpdating(false)
     } catch (error) {
       console.log(error)
